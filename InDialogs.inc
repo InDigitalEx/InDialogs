@@ -19,7 +19,6 @@
                                 public dc_%0(%1)
 
 #define DialogShow:%0(%1)       dc_%0(%1)
-#define DialogName:%0           dc_%0
 
 #define Dialog:                 #dr_
 #define DLG:                    #dr_
@@ -67,7 +66,9 @@ stock dgtl_ShowPlayerDialog(playerid, const dialog[],
 
 stock Dialog_ShowByName(playerid, const dialog[])
 {
-    return CallLocalFunction(dialog, "%d", playerid);
+    new function[32] = "dc_";
+    strcat(function, dialog);
+    return CallLocalFunction(function, "%d", playerid);
 }
 
 stock Dialog_Close(playerid)
@@ -107,3 +108,44 @@ forward dgtl_OnDialogResponse(playerid, dialogid, response, listitem, inputtext[
     #define _ALS_ShowPlayerDialog
 #endif
 #define ShowPlayerDialog dgtl_ShowPlayerDialog
+
+
+#if defined InDialogs_Features
+
+static dialogBack[MAX_PLAYERS][32]; // Max func name - 31
+
+stock ShowErrorDialog(playerid, const toDialog[], const info[])
+{
+    strcat(dialogBack[playerid], toDialog);
+    return ShowPlayerDialog(playerid, Dialog:ErrorConfirm, DIALOG_STYLE_MSGBOX,
+        ""COLOR_LIGHTRED"Ошибка", info, "Ок", "");
+}
+
+DialogResponse:ErrorConfirm()
+{
+    new dialog[32];
+    strcat(dialog, dialogBack[playerid]);
+    dialogBack[playerid][0] = EOS;
+    return Dialog_ShowByName(playerid, dialog);
+}
+
+stock ShowExitDialog(playerid, const toDialog[])
+{
+    strcat(dialogBack[playerid], toDialog);
+    return ShowPlayerDialog(playerid, Dialog:ExitConfirm, DIALOG_STYLE_MSGBOX,
+        ""COLOR_LIGHTRED"Выход", "{FFFFFF}Вы действительно хотите выйти?", "<<", "Да");
+}
+
+DialogResponse:ExitConfirm()
+{
+    if(response)
+    {
+        new dialog[32];
+        strcat(dialog, dialogBack[playerid]);
+        dialogBack[playerid][0] = EOS;
+        return Dialog_ShowByName(playerid, dialog);
+    }
+    else return Kick(playerid);
+}
+
+#endif
