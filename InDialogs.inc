@@ -66,9 +66,7 @@ stock dgtl_ShowPlayerDialog(playerid, const dialog[],
 
 stock Dialog_ShowByName(playerid, const dialog[])
 {
-    new function[32] = "dc_";
-    strcat(function, dialog);
-    return CallLocalFunction(function, "%d", playerid);
+    return CallLocalFunction(dialog, "%d", playerid);
 }
 
 stock Dialog_Close(playerid)
