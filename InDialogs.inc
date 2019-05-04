@@ -118,7 +118,7 @@ stock ShowErrorDialog(playerid, const toDialog[], const info[])
 {
     strcat(dialogBack[playerid], toDialog);
     return ShowPlayerDialog(playerid, Dialog:ErrorConfirm, DIALOG_STYLE_MSGBOX,
-        ""COLOR_LIGHTRED"Ошибка", info, "Ок", "");
+        "{FF6347}Ошибка", info, "Ок", "");
 }
 
 DialogResponse:ErrorConfirm()
@@ -133,7 +133,7 @@ stock ShowExitDialog(playerid, const toDialog[])
 {
     strcat(dialogBack[playerid], toDialog);
     return ShowPlayerDialog(playerid, Dialog:ExitConfirm, DIALOG_STYLE_MSGBOX,
-        ""COLOR_LIGHTRED"Выход", "{FFFFFF}Вы действительно хотите выйти?", "<<", "Да");
+        "{FF6347}Выход", "{FFFFFF}Вы действительно хотите выйти?", "<<", "Да");
 }
 
 DialogResponse:ExitConfirm()
