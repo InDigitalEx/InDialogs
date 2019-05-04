@@ -43,8 +43,8 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
     dialogCallback[playerid][0] = EOS;
     dialogID[playerid] = -1;
 
-    return CallLocalFunction(function, "ddds",
-        playerid, response, listitem, (inputtext[0] == EOS) ? "\1" : inputtext);
+    return CallLocalFunction(function, "dddds",
+        playerid, dialogid, response, listitem, (inputtext[0] == EOS) ? "\1" : inputtext);
 }
 
 stock dgtl_ShowPlayerDialog(playerid, const dialog[],
