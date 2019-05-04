@@ -27,7 +27,7 @@
 #define MAX_FUNC_NAME           32 // 31+1
 
 // Magic code
-static  dialogID[MAX_PLAYERS],
+static  dialogID[MAX_PLAYERS] = {-1, ...},
         dialogCallback[MAX_PLAYERS][MAX_FUNC_NAME];
 
 
@@ -50,8 +50,6 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 stock dgtl_ShowPlayerDialog(playerid, const dialog[],
     style, const caption[], const info[], const button1[], const button2[])
 {
-    if(dialog[0] == '\0') return ShowPlayerDialog(playerid, -1, 0, "", "", "", "");
-
     strmid(dialogCallback[playerid], dialog, 0, 31);
     dialogID[playerid] = funcidx(dialog);
 
@@ -77,7 +75,17 @@ stock Dialog_Close(playerid)
 {
     dialogID[playerid] = -1;
     dialogCallback[playerid][0] = EOS;
-    return ShowPlayerDialog(playerid, '\0', 0, "", "", "", "");
+    return ShowPlayerDialog(playerid, -1, 0, "", "", "", "");
+}
+
+stock Dialog_IsOpened(playerid)
+{
+    return dialogID[playerid] == -1 ? false : true;
+}
+
+stock Dialog_GetID(playerid)
+{
+    return dialogID[playerid] == -1 ? -1 : dialogID[playerid];
 }
 
 // ===== HOOKS =====
