@@ -19,6 +19,7 @@
                                 public dc_%0(%1)
 
 #define DialogShow:%0(%1)       dc_%0(%1)
+#define DialogName:%0           dc_%0
 
 #define Dialog:                 #dr_
 #define DLG:                    #dr_
